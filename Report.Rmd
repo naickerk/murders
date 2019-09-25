@@ -1,0 +1,79 @@
+---
+title: "Report"
+author: "KN"
+date: "24/09/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Note the args include, eval, echo, message, warning
+```{r load libraries, message=FALSE,warning=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+### **_Experimenting with eval:_**
+
+```{r experimenting with eval1, eval=FALSE}
+a <- 2
+print(a)
+```
+
+
+```{r experimenting with eval2, eval=TRUE}
+a <- 2
+print(a)
+```
+
+### **_Experimenting with include:_**
+* toggles providing code and output defined in code
+```{r experimenting with inc1, include=FALSE}
+a <- 5
+print('hello')
+```  
+a is `r a` for False
+```{r experimenting with inc2, include=TRUE}
+a <- 5
+print('hello')
+```  
+a is `r a` for True
+
+### **_Experimenting with echo:_**
+* always provides output defined in code, toggles wether to show code 
+```{r experimenting with echo1, echo=T}
+a <- 5
+print('Hello')
+```
+is True
+```{r experimenting with echo2, echo=F}
+a <- 5
+print('Hello')
+```
+is False
+
+
+
+
+### Gun Murders:
+```{r load data,echo=FALSE}
+load('rda/murders.rda')
+summary(murders)
+```
+#### Plot1: R generated image will scale automatically depending on display
+```{r plot way 1, echo=FALSE}
+murders %>% mutate(abb=reorder(abb,rate)) %>% 
+  ggplot(aes(x=abb,y=rate))+
+  geom_col()+
+  coord_flip()+
+  theme(axis.text.y = element_text(size =7))
+```
+
+#### Plot2: User provided image for display
+```{r plot way 2,echo=FALSE}
+img_path <- 'figs/barplot.png'
+include_graphics(img_path)
+```
